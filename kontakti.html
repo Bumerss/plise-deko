@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Pāriet uz saturu</a>
 <div class="topbar">
   <div class="container">
     <div class="topbar__contact">
@@ -21,9 +22,9 @@
 </div>
 <header class="header">
   <div class="container">
-    <a class="header__logo" href="index.html"><img src="assets/img/logo.webp" alt="Plisē Deko"></a>
-    <button class="nav-toggle" aria-label="Izvēlne">☰</button>
-    <nav class="nav">
+    <a class="header__logo" href="index.html"><img src="assets/img/logo.webp" alt="Plisē Deko" width="260" height="48"></a>
+    <button class="nav-toggle" type="button" aria-label="Atvērt izvēlni" aria-expanded="false" aria-controls="main-nav"><span></span></button>
+    <nav class="nav" id="main-nav" aria-label="Galvenā izvēlne">
       <ul>
         <li><a href="index.html">Sākums</a></li>
         <li><a href="par-mums.html">Uzņēmums</a>
@@ -39,13 +40,13 @@
         <li><a href="cenradis.html">Cenrādis</a></li>
         <li><a href="objekti.html">Objekti</a></li>
         <li><a href="sadarbibas-partneri.html">Partneri</a></li>
-        <li class="is-active"><a href="kontakti.html">Kontakti</a></li>
+        <li class="is-active"><a href="kontakti.html" aria-current="page">Kontakti</a></li>
       </ul>
     </nav>
   </div>
 </header><div class="page-banner" style="background-image:url('assets/img/hero/duette-farbig.jpg')"></div><div class="breadcrumb"><div class="container">Jūs esat šeit: <a href="index.html">Sākums</a><span class="sep">/</span><span>Kontakti</span></div></div>
 <div class="container layout">
-  <main class="content">
+  <main class="content" id="main">
     <h1>Kontakti</h1>
     <div class="contact-grid">
       <dl>
@@ -56,7 +57,7 @@
         <dt>Darba laiks</dt><dd>[jāpapildina]</dd>
       </dl>
       <form class="form" id="forma" action="mailto:info@plisedeko.lv" method="post" enctype="text/plain">
-        <h3>Pieprasīt piedāvājumu</h3>
+        <h2 class="sub-title">Pieprasīt piedāvājumu</h2>
         <label for="f-name">Vārds</label><input id="f-name" name="vards">
         <label for="f-email">E-pasts</label><input id="f-email" name="epasts" type="email">
         <label for="f-phone">Tālrunis</label><input id="f-phone" name="talrunis">
@@ -67,9 +68,9 @@
     <iframe class="map" src="https://maps.google.com/maps?q=56.9668,24.1437&z=14&output=embed" loading="lazy" title="Karte"></iframe>
   </main>
   <aside class="sidebar">
-    <h4>Uzņēmums</h4>
-    <ul><li><a href="par-mums.html">Par mums</a></li><li><a href="objekti.html">Objekti</a></li><li><a href="sadarbibas-partneri.html">Sadarbības partneri</a></li><li class="is-active"><a href="kontakti.html">Kontakti</a></li></ul>
-    <div class="side-cta"><p>Nepieciešams piedāvājums vai konsultācija?</p><a class="btn" href="kontakti.html">Sazināties</a></div>
+    <h2>Uzņēmums</h2>
+    <ul><li><a href="par-mums.html">Par mums</a></li><li><a href="objekti.html">Objekti</a></li><li><a href="sadarbibas-partneri.html">Sadarbības partneri</a></li><li class="is-active"><a href="kontakti.html" aria-current="page">Kontakti</a></li></ul>
+    <div class="side-cta"><p>Nepieciešams piedāvājums vai konsultācija?</p><a class="btn" href="kontakti.html" aria-current="page">Sazināties</a></div>
   </aside>
 </div>
 <footer class="footer">
@@ -79,7 +80,7 @@
       <p>Plisē sistēmas augstākajā kvalitātē – logu aizsegi un tehniski risinājumi.</p>
     </div>
     <div>
-      <h4>Kontakti</h4>
+      <h2>Kontakti</h2>
       <ul>
         <li>Brīvības iela 155/1. korpuss, Rīga</li>
         <li><a href="tel:+37167543278">Tel. 67543278</a></li>
@@ -88,16 +89,16 @@
       </ul>
     </div>
     <div>
-      <h4>Produkcija</h4>
+      <h2>Produkcija</h2>
       <ul><li><a href="produkcija.html#vertikali">Vertikāliem logiem un durvīm</a></li><li><a href="produkcija.html#jumta">Jumta un slīpiem logiem</a></li><li><a href="produkcija.html#formas">Speciālu formu logiem</a></li></ul>
     </div>
     <div>
-      <h4>Uzņēmums</h4>
+      <h2>Uzņēmums</h2>
       <ul>
         <li><a href="par-mums.html">Par mums</a></li>
         <li><a href="objekti.html">Objekti</a></li>
         <li><a href="sadarbibas-partneri.html">Sadarbības partneri</a></li>
-        <li><a href="kontakti.html">Kontakti</a></li>
+        <li><a href="kontakti.html" aria-current="page">Kontakti</a></li>
       </ul>
     </div>
   </div>

@@ -245,7 +245,8 @@ function head(title) {
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>`;
+<body>
+<a class="skip-link" href="#main">Pāriet uz saturu</a>`;
 }
 
 function header(active) {
@@ -266,9 +267,9 @@ function header(active) {
 </div>
 <header class="header">
   <div class="container">
-    <a class="header__logo" href="index.html"><img src="assets/img/logo.webp" alt="${SITE.name}"></a>
-    <button class="nav-toggle" aria-label="Izvēlne">☰</button>
-    <nav class="nav">
+    <a class="header__logo" href="index.html"><img src="assets/img/logo.webp" alt="${SITE.name}" width="260" height="48"></a>
+    <button class="nav-toggle" type="button" aria-label="Atvērt izvēlni" aria-expanded="false" aria-controls="main-nav"><span></span></button>
+    <nav class="nav" id="main-nav" aria-label="Galvenā izvēlne">
       <ul>
         <li${cls('home')}><a href="index.html">Sākums</a></li>
         <li${cls('company')}><a href="par-mums.html">Uzņēmums</a>
@@ -300,7 +301,7 @@ function footer() {
       <p>Plisē sistēmas augstākajā kvalitātē – logu aizsegi un tehniski risinājumi.</p>
     </div>
     <div>
-      <h4>Kontakti</h4>
+      <h2>Kontakti</h2>
       <ul>
         <li>${SITE.address}</li>
         <li><a href="tel:+371${SITE.phone}">Tel. ${SITE.phone}</a></li>
@@ -309,11 +310,11 @@ function footer() {
       </ul>
     </div>
     <div>
-      <h4>Produkcija</h4>
+      <h2>Produkcija</h2>
       <ul>${GROUPS.map((g) => `<li><a href="produkcija.html#${g.id}">${g.title}</a></li>`).join('')}</ul>
     </div>
     <div>
-      <h4>Uzņēmums</h4>
+      <h2>Uzņēmums</h2>
       <ul>
         <li><a href="par-mums.html">Par mums</a></li>
         <li><a href="objekti.html">Objekti</a></li>
@@ -352,7 +353,7 @@ function productSidebar(activeSlug) {
       </li>`
   ).join('');
   return `<aside class="sidebar">
-    <h4>Produkcija</h4>
+    <h2>Produkcija</h2>
     <ul>
       <li${activeSlug === 'all' ? ' class="is-active"' : ''}><a href="produkcija.html">Visas plisē sistēmas</a></li>
       ${groups}
@@ -371,7 +372,7 @@ function companySidebar(active) {
     ['contact', 'kontakti.html', 'Kontakti'],
   ];
   return `<aside class="sidebar">
-    <h4>Uzņēmums</h4>
+    <h2>Uzņēmums</h2>
     <ul>${items.map(([k, h, l]) => `<li${k === active ? ' class="is-active"' : ''}><a href="${h}">${l}</a></li>`).join('')}</ul>
     ${sideCta()}
   </aside>`;
@@ -391,7 +392,8 @@ const ICONS = {
 const pages = {};
 
 pages['index.html'] = head('Plisē sistēmas') + header('home') + `
-<section class="hero">
+<main id="main">
+<section class="hero" aria-roledescription="karuselis" aria-label="Plisē sistēmas">
   ${HERO.map((h, i) => `<div class="hero__slide${i === 0 ? ' is-active' : ''}" style="background-image:url('${h.img}')">
     <div class="hero__caption"><div class="container">
       <${i === 0 ? 'h1' : 'h2'} class="hero__title">${h.title}</${i === 0 ? 'h1' : 'h2'}>
@@ -450,12 +452,13 @@ pages['index.html'] = head('Plisē sistēmas') + header('home') + `
     </div>
   </div>
 </section>
+</main>
 ` + footer();
 
 pages['produkcija.html'] = head('Produkcija') + header('products') + banner('assets/img/hero/Plissee_Design_1.jpg') +
   breadcrumb([['Produkcija']]) + `
 <div class="container layout">
-  <main class="content">
+  <main class="content" id="main">
     <h1>Plisē sistēmas</h1>
     <p class="lead">Mēs izgatavojam plisē sistēmas augstākajā kvalitātē – vertikāliem logiem un durvīm, jumta un slīpiem logiem, kā arī speciālu formu logiem.</p>
     ${GROUPS.map((g) => `
@@ -479,18 +482,18 @@ for (const s of ALL) {
   pages[`${s.slug}.html`] = head(s.name) + header('products') + banner(cover(s)) +
     breadcrumb([['Produkcija', 'produkcija.html'], [s.group.title, `produkcija.html#${s.group.id}`], [s.name]]) + `
 <div class="container layout">
-  <main class="content">
+  <main class="content" id="main">
     <h1>${s.name}</h1>
     <p class="lead">${s.short}</p>
-    <h3>Tehniskā informācija</h3>
+    <h2 class="sub-title">Tehniskā informācija</h2>
     <table class="specs">
       ${Object.entries(s.specs).map(([k, v]) => `<tr><th>${k}</th><td>${v}</td></tr>`).join('')}
     </table>
-    <h3>Īpašības</h3>
+    <h2 class="sub-title">Īpašības</h2>
     <ul class="features">${s.features.map((f) => `<li>${f}</li>`).join('')}</ul>
-    <h3>Attēli</h3>
+    <h2 class="sub-title">Attēli</h2>
     <div class="gallery">
-      ${s.images.map((f) => `<a href="${P + f}"><img src="${P + f}" alt="${esc(s.name)}" loading="lazy"></a>`).join('')}
+      ${s.images.map((f) => `<a href="${P + f}"${/^ras\d/.test(f) ? ' class="is-drawing"' : ''}><img src="${P + f}" alt="${esc(s.name)}" loading="lazy"></a>`).join('')}
     </div>
     <div class="cta-box"><p>Vēlaties šo sistēmu savam logam? Sazinieties ar mums.</p><a class="btn" href="kontakti.html#forma">Pieprasīt piedāvājumu</a></div>
   </main>
@@ -518,7 +521,7 @@ const CALC_DATA = ALL.map((s) => ({
 pages['cenradis.html'] = head('Cenrādis') + header('prices') + banner('assets/img/hero/Plissee_Uni_2.jpg') +
   breadcrumb([['Produkcija', 'produkcija.html'], ['Cenrādis']]) + `
 <div class="container layout">
-  <main class="content">
+  <main class="content" id="main">
     <h1>Cenrādis</h1>
     <p class="lead">Plisē sistēmu cenas tiks pievienotas drīzumā. Līdz tam izmantojiet kalkulatoru, lai pārbaudītu, vai jūsu loga izmēri atbilst sistēmai, un pieprasiet piedāvājumu.</p>
 
@@ -569,13 +572,13 @@ pages['cenradis.html'] = head('Cenrādis') + header('prices') + banner('assets/i
 pages['par-mums.html'] = head('Par mums') + header('company') + banner('assets/img/hero/plissee011.jpg') +
   breadcrumb([['Uzņēmums', 'par-mums.html'], ['Par mums']]) + `
 <div class="container layout">
-  <main class="content">
+  <main class="content" id="main">
     <h1>Par mums</h1>
     <p class="lead">PLISĒ DEKO ir uzņēmums ar lielu kompetenci savā jomā. Mēs sevi redzam kā speciālistus logu aizsegu un tehnisko risinājumu jomā arī nākotnē.</p>
     <div class="values">
-      <div><h3>Galvenais mums</h3><p>Mēs izgatavojam plisē sistēmas augstākajā kvalitātē. Mūsu mērķis ir popularizēt un tirgot šīs unikālās sistēmas, kuras pēc funkcionalitātes un estētiskuma ieņem vadošo vietu starptautiskajā tirgū.</p></div>
-      <div><h3>Galvenais klientiem</h3><p>Piedāvājot savus pakalpojumus, mēs uzturam godīgas partnerattiecības ar saviem klientiem. Mūsu produkts un mūsu serviss viņiem palīdz veidot labvēlīgu vidi biznesā.</p></div>
-      <div><h3>Atbildība</h3><p>Mūsu atbildība par kvalitāti nostiprina arī savstarpējo uzticību.</p></div>
+      <div><h2>Galvenais mums</h2><p>Mēs izgatavojam plisē sistēmas augstākajā kvalitātē. Mūsu mērķis ir popularizēt un tirgot šīs unikālās sistēmas, kuras pēc funkcionalitātes un estētiskuma ieņem vadošo vietu starptautiskajā tirgū.</p></div>
+      <div><h2>Galvenais klientiem</h2><p>Piedāvājot savus pakalpojumus, mēs uzturam godīgas partnerattiecības ar saviem klientiem. Mūsu produkts un mūsu serviss viņiem palīdz veidot labvēlīgu vidi biznesā.</p></div>
+      <div><h2>Atbildība</h2><p>Mūsu atbildība par kvalitāti nostiprina arī savstarpējo uzticību.</p></div>
     </div>
   </main>
   ${companySidebar('about')}
@@ -584,7 +587,7 @@ pages['par-mums.html'] = head('Par mums') + header('company') + banner('assets/i
 pages['objekti.html'] = head('Objekti') + header('objects') + banner(O + OBJECTS[0].images[0]) +
   breadcrumb([['Uzņēmums', 'par-mums.html'], ['Objekti']]) + `
 <div class="container layout">
-  <main class="content">
+  <main class="content" id="main">
     <h1>Objekti</h1>
     <p class="lead">Mūsu realizētie projekti privātmājās un dzīvokļos.</p>
     ${OBJECTS.map((o) => `<h2 class="group-title">${o.title}</h2>
@@ -596,11 +599,11 @@ pages['objekti.html'] = head('Objekti') + header('objects') + banner(O + OBJECTS
 pages['sadarbibas-partneri.html'] = head('Sadarbības partneri') + header('partners') + banner('assets/img/hero/Plissee_Uni_2.jpg') +
   breadcrumb([['Uzņēmums', 'par-mums.html'], ['Sadarbības partneri']]) + `
 <div class="container layout">
-  <main class="content">
+  <main class="content" id="main">
     <h1>Sadarbības partneri</h1>
     <p class="lead">Mūsu plisē sistēmas iespējams iegādāties pie šiem partneriem.</p>
     <div class="partners">
-      ${PARTNERS.map((p) => `<div class="partner"><div class="partner__logo">${p.logo ? `<img src="assets/img/partners/${p.logo}" alt="${esc(p.name)}" loading="lazy">` : `<span>${esc(p.name)}</span>`}</div><span class="type">${p.type}</span><h3>${esc(p.name)}</h3>${p.places.length ? `<ul>${p.places.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div>`).join('')}
+      ${PARTNERS.map((p) => `<div class="partner"><div class="partner__logo">${p.logo ? `<img src="assets/img/partners/${p.logo}" alt="${esc(p.name)}" loading="lazy">` : `<span>${esc(p.name)}</span>`}</div><span class="type">${p.type}</span><h2>${esc(p.name)}</h2>${p.places.length ? `<ul>${p.places.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div>`).join('')}
     </div>
   </main>
   ${companySidebar('partners')}
@@ -609,7 +612,7 @@ pages['sadarbibas-partneri.html'] = head('Sadarbības partneri') + header('partn
 pages['kontakti.html'] = head('Kontakti') + header('contact') + banner('assets/img/hero/duette-farbig.jpg') +
   breadcrumb([['Kontakti']]) + `
 <div class="container layout">
-  <main class="content">
+  <main class="content" id="main">
     <h1>Kontakti</h1>
     <div class="contact-grid">
       <dl>
@@ -620,7 +623,7 @@ pages['kontakti.html'] = head('Kontakti') + header('contact') + banner('assets/i
         <dt>Darba laiks</dt><dd>[jāpapildina]</dd>
       </dl>
       <form class="form" id="forma" action="mailto:${SITE.email}" method="post" enctype="text/plain">
-        <h3>Pieprasīt piedāvājumu</h3>
+        <h2 class="sub-title">Pieprasīt piedāvājumu</h2>
         <label for="f-name">Vārds</label><input id="f-name" name="vards">
         <label for="f-email">E-pasts</label><input id="f-email" name="epasts" type="email">
         <label for="f-phone">Tālrunis</label><input id="f-phone" name="talrunis">
@@ -633,5 +636,8 @@ pages['kontakti.html'] = head('Kontakti') + header('contact') + banner('assets/i
   ${companySidebar('contact')}
 </div>` + footer();
 
-for (const [file, html] of Object.entries(pages)) writeFileSync(new URL(file, import.meta.url), html);
+// Mark links to the current page for screen readers
+for (const [file, html] of Object.entries(pages)) {
+  writeFileSync(new URL(file, import.meta.url), html.split(`href="${file}"`).join(`href="${file}" aria-current="page"`));
+}
 console.log(`Built ${Object.keys(pages).length} pages.`);
